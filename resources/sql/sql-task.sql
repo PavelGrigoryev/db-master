@@ -47,9 +47,7 @@ FROM flights
          JOIN airports_data AS arr ON flights.arrival_airport = arr.airport_code
 WHERE dep.city ->> 'ru' = 'Екатеринбург'
   AND arr.city ->> 'ru' = 'Москва'
-  AND flights.status != 'Departed'
-  AND flights.status != 'Arrived'
-  AND flights.status != 'Cancelled'
+  AND flights.status NOT IN ('Departed', 'Arrived', 'Cancelled')
   AND scheduled_departure > bookings.now()
 ORDER BY scheduled_departure
 LIMIT 1;

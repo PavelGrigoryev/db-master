@@ -86,26 +86,18 @@ CREATE TABLE orders
 
 --Написать 5 insert в эти таблицы
 INSERT INTO customers (firstName, lastName, email, phone)
-VALUES ('Peter', 'Jackson', 'jaksy@gmail.com', '+375894589632');
-INSERT INTO customers (firstName, lastName, email, phone)
-VALUES ('Sveta', 'Ivanova', 'ivanRules@yandex.ru', '+375292236589');
-INSERT INTO customers (firstName, lastName, email, phone)
-VALUES ('Boby', 'Brown', 'browny_bob@mail.edu', '+375896548932');
-INSERT INTO customers (firstName, lastName, email, phone)
-VALUES ('Suzy', 'Jonce', 'susanna@yahoo.com', '+375986665478');
-INSERT INTO customers (firstName, lastName, email, phone)
-VALUES ('Anna', 'Shlapnikova', 'megakiller666@gmail.com', '+375333658863');
+VALUES ('Peter', 'Jackson', 'jaksy@gmail.com', '+375894589632'),
+       ('Sveta', 'Ivanova', 'ivanRules@yandex.ru', '+375292236589'),
+       ('Boby', 'Brown', 'browny_bob@mail.edu', '+375896548932'),
+       ('Suzy', 'Jonce', 'susanna@yahoo.com', '+375986665478'),
+       ('Anna', 'Shlapnikova', 'megakiller666@gmail.com', '+375333658863');
 
 INSERT INTO orders (customerId, quantity)
-VALUES (1, 11);
-INSERT INTO orders (customerId, quantity)
-VALUES (4, 7);
-INSERT INTO orders (customerId, quantity)
-VALUES (3, 4);
-INSERT INTO orders (customerId, quantity)
-VALUES (2, 2);
-INSERT INTO orders (customerId, quantity)
-VALUES (5, 1200);
+VALUES (1, 11),
+       (4, 7),
+       (3, 4),
+       (2, 2),
+       (5, 1200);
 
 --Удалить таблицы
 DROP TABLE orders, customers;

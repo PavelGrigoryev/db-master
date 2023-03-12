@@ -114,3 +114,16 @@ FROM tickets
 WHERE board.boarding_no = 120
   AND book.total_amount < 10000
   AND date(book.book_date) = date('2017-07-31');
+
+--Вывести топ-5 самых прибыльных маршрутов за последний месяц (маршрут, выручка)
+SELECT concat(dep.city ->> 'ru', ' -> ', arr.city ->> 'ru') AS route,
+       sum(tf.amount)                                       AS total_amount
+FROM flights
+         JOIN ticket_flights AS tf ON flights.flight_id = tf.flight_id
+         JOIN airports_data AS dep ON flights.departure_airport = dep.airport_code
+         JOIN airports_data AS arr ON flights.arrival_airport = arr.airport_code
+WHERE flights.scheduled_departure BETWEEN bookings.now() - INTERVAL '1 month' AND bookings.now()
+  AND flights.status != 'Cancelled'
+GROUP BY route
+ORDER BY total_amount DESC
+LIMIT 5;

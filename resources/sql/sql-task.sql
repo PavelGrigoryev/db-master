@@ -67,21 +67,21 @@ FROM (SELECT ticket_no AS min_tecket_no,
       LIMIT 1) AS max;
 
 --Написать DDL таблицы Customers , должны быть поля id , firstName, LastName, email , phone. Добавить ограничения на поля (constraints)
-CREATE TABLE customers
+CREATE TABLE IF NOT EXISTS customers
 (
-    id        SERIAL PRIMARY KEY,
-    firstName VARCHAR(20) NOT NULL,
-    lastName  VARCHAR(20) NOT NULL,
-    email     VARCHAR(30) NOT NULL UNIQUE,
+    id        BIGSERIAL PRIMARY KEY,
+    firstName VARCHAR(20) NOT NULL CHECK (firstName ~* '^[A-Za-z]+$'),
+    lastName  VARCHAR(20) NOT NULL CHECK (lastName ~* '^[A-Za-z]+$'),
+    email     VARCHAR(30) NOT NULL UNIQUE CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
     phone     VARCHAR(20) NOT NULL CHECK (phone LIKE '+%')
 );
 
 --Написать DDL таблицы Orders , должен быть id, customerId, quantity. Должен быть внешний ключ на таблицу customers + ограничения
-CREATE TABLE orders
+CREATE TABLE IF NOT EXISTS orders
 (
-    id         SERIAL PRIMARY KEY,
-    customerId INTEGER NOT NULL REFERENCES customers (id),
-    quantity   INTEGER NOT NULL CHECK (quantity > 0)
+    id         BIGSERIAL PRIMARY KEY,
+    customerId BIGSERIAL NOT NULL REFERENCES customers (id),
+    quantity   INTEGER   NOT NULL CHECK (quantity > 0)
 );
 
 --Написать 5 insert в эти таблицы
@@ -100,7 +100,7 @@ VALUES (1, 11),
        (5, 1200);
 
 --Удалить таблицы
-DROP TABLE orders, customers;
+DROP TABLE IF EXISTS orders, customers;
 
 --Написать свой кастомный запрос (rus + sql)
 --Вывести пассажиров с посадочным номером 120, общая сумма которых меньше 10 тысяч и дата бронирования за 2017-07-31
